@@ -129,6 +129,8 @@ in
 stdenv.mkDerivation (rec {
   inherit pname version cmakeFlags patches;
 
+  NIX_CFLAGS_COMPILE = [ "-ffunction-sections" ];
+
   src = src';
 
   outputs = [ "out" "dev" ];
