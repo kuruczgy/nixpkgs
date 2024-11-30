@@ -1,10 +1,10 @@
 { lib
+, pkgs
 , stdenv
 , callPackage
 , runCommandLocal
 , writeShellScript
 , glibc
-, pkgsi686Linux
 , runCommandCC
 , coreutils
 , bubblewrap
@@ -41,6 +41,8 @@ let
     ;
 
   inherit (lib.attrsets) removeAttrs;
+
+  inherit (pkgs) pkgsi686Linux;
 
   name = args.name or "${args.pname}-${args.version}";
   executableName = args.pname or args.name;

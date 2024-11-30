@@ -5,7 +5,7 @@
 , writeText
 , writeShellScriptBin
 , pkgs
-, pkgsi686Linux
+, pkgsBuildBuild
 }:
 
 { profile ? ""
@@ -36,6 +36,7 @@
 # /lib will link to /lib64
 
 let
+  pkgsi686Linux = pkgs.pkgsi686Linux;
   name = if (args ? pname && args ? version)
     then "${args.pname}-${args.version}"
     else args.name;
@@ -174,7 +175,7 @@ let
 
   allPaths = paths ++ paths32;
 
-  rootfs-builder = pkgs.rustPlatform.buildRustPackage {
+  rootfs-builder = pkgsBuildBuild.rustPlatform.buildRustPackage {
     name = "fhs-rootfs-bulder";
     src = ./rootfs-builder;
     cargoLock.lockFile = ./rootfs-builder/Cargo.lock;
@@ -211,7 +212,7 @@ let
         ln -fsr $d/glib-2.0/schemas/*.xml $out/usr/share/glib-2.0/schemas
         ln -fsr $d/glib-2.0/schemas/*.gschema.override $out/usr/share/glib-2.0/schemas
       done
-      ${pkgs.glib.dev}/bin/glib-compile-schemas $out/usr/share/glib-2.0/schemas
+      ${pkgsBuildBuild.glib.dev}/bin/glib-compile-schemas $out/usr/share/glib-2.0/schemas
     fi
 
     ${extraBuildCommands}

@@ -9373,7 +9373,8 @@ with pkgs;
     # has target and host always set to the same value based on target platform
     # of the current set. We need host to be same as build to correctly get i686
     # variant of glibc.
-    glibc32 = pkgsi686Linux.buildPackages.glibc;
+    # glibc32 = pkgsi686Linux.buildPackages.glibc;
+    glibc32 = pkgsi686Linux.glibc;
   };
 
   glsurf = callPackage ../applications/science/math/glsurf {
